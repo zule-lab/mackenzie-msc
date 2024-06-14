@@ -15,4 +15,6 @@ ggplot(survey_yards, aes(x=density, fill= (presence.of.hedge))) +
   facet_wrap(vars(presence.of.hedge))
 
 
+mean(survey_yards$sampled.area.ha)  
+
 

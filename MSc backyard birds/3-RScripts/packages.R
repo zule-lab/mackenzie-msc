@@ -32,5 +32,10 @@ library(psych)
 library(benthos) 
 library(mobr) 
 
- 
+library(lubridate) 
+library(openintro) 
+library(palmerpenguins) 
+library(ggthemes) 
+library(maps) 
+library(ggmap)  
 
