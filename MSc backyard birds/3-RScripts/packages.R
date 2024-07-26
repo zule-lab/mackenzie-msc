@@ -39,3 +39,5 @@ library(ggthemes)
 library(maps) 
 library(ggmap)  
 
+
+library(traitdata)
