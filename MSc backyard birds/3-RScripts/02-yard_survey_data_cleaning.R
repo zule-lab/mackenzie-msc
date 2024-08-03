@@ -1,7 +1,7 @@
 #this script has all the data modications and cleaning
 #packages used: tidyverse 
 
-source("3-RScripts/packages.R")
+source("3-RScripts/0-packages.R")
 
 yard_surveys <- read.csv("1-Input/yard_surveys.csv")
 
