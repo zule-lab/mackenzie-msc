@@ -40,6 +40,14 @@ street_surveys$Plant.species[which(street_surveys$Plant.species== "Red ash ")] <
 street_surveys$Plant.species[which(street_surveys$Plant.species== "Tatarian honeysuckle ")] <- "Tatarian honeysuckle"
 street_surveys$Plant.species[which(street_surveys$Plant.species== "White spruce ")] <- "White spruce"
 
+#Renaming to match yard_surevy df
+names(street_surveys)[names(street_surveys) == 'Street.code'] <- 'Yard.code'
+
+street_surveys$Type <- 'Street'
+street_surveys$IsHedge <- 'NA'
+street_surveys$Basal.density <- 'NA'
+
+
 
 #Changing blanks into NAs
 
@@ -63,3 +71,5 @@ table(street_surveys$Bird.Scientific.Name)
 table(street_surveys$Scientific.Name)
 table(street_surveys$Behaviour)
 table(street_surveys$Plant.species)
+table(street_surveys$Street.code)
+

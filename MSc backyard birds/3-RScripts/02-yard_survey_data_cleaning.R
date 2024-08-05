@@ -64,14 +64,67 @@ yard_surveys$Plant.species[which(yard_surveys$Plant.species== "Norway spruce ")]
 yard_surveys$Plant.species[which(yard_surveys$Plant.species== "Trumpet honeysuckle ")] <- "Trumpet honeysuckle"
 yard_surveys$Plant.species[which(yard_surveys$Plant.species== "White ash ")] <- "White ash"
 
+#Modifications in the column: Yard.code 
+
+yard_surveys$Yard.code[which(yard_surveys$Yard.code== "Y03 ")] <- "Y03"
+
+
+
+#Adding column: Yard 
+yard_surveys$Type <- 'Yard'
+
+
+# Add a new column 'IsHedge' based on 'Yard.code'
+yard_surveys <- yard_surveys %>% mutate(IsHedge = case_when(
+  Yard.code == "Y03" ~ 'Yes',
+  Yard.code == "Y04" ~ 'Yes',
+  Yard.code == "Y05" ~ 'Yes',
+  Yard.code == "Y06" ~ 'Yes',
+  Yard.code == "Y07" ~ 'Yes',
+  Yard.code == "Y09" ~ 'Yes',
+  Yard.code == "Y13" ~ 'Yes',
+  Yard.code == "Y31" ~ 'Yes',
+  Yard.code == "Y24" ~ 'Yes',
+  TRUE ~ 'No'
+))
+
+# Add a new column 'IsHedge' based on 'Yard.code'
+yard_surveys <- yard_surveys %>% mutate(Basal.density = case_when(
+  Yard.code == "Y03" ~ '2.5470304',
+  Yard.code == "Y04" ~ '3.1567111',
+  Yard.code == "Y05" ~ '5.1747616',
+  Yard.code == "Y06" ~ '5.2786735',
+  Yard.code == "Y07" ~ '6.9929772',
+  Yard.code == "Y09" ~ '9.9382062',
+  Yard.code == "Y13" ~ '12.7497909',
+  Yard.code == "Y31" ~ '0.8590313',
+  Yard.code == "Y24" ~ '66.8015769',
+  Yard.code == "Y18" ~ '36.854895',
+  Yard.code == "Y20" ~ '44.9160733',
+  Yard.code == "25" ~ 'NA',
+  Yard.code == "Y26" ~ '3.8040849',
+  Yard.code == "Y27" ~ '5.504345',
+  Yard.code == "Y28" ~ '11.3989116',
+  Yard.code == "Y32" ~ '18.1459564',
+  Yard.code == "Y33" ~ '8.7178143',
+  Yard.code == "Y44" ~ '6.8395773',
+  Yard.code == "Y45" ~ '8.9523931',
+  Yard.code == "Y47" ~ '24.3215042',
+  Yard.code == "Y49" ~ '12.2787018',
+  TRUE ~ 'No'
+))
+
+
+
+#Joining the Elton birds dataset of ecological traits to the yard surveys dataset
+
+yard_surveys_cleaned <- left_join(yard_surveys,elton_birds, by = join_by("Bird.Scientific.Name" == "scientificNameStd"))
+
 
 #Changing blanks into NAs
 
 yard_surveys$Species <- na_if(yard_surveys$Species, "")
 
-#Joining the Elton birds dataset of ecological traits to the yard surveys dataset
-
-yard_surveys_cleaned <- left_join(yard_surveys,elton_birds, by = join_by("Bird.Scientific.Name" == "scientificNameStd"))
 
 #Saving this under 2-Cleaned_data
 
@@ -86,5 +139,5 @@ table(yard_surveys$Bird.Scientific.Name)
 table(yard_surveys$Scientific.Name)
 table(yard_surveys$Plant.species)
 table(yard_surveys$DBH..cm.)
-
+table(yard_surveys$Yard.code)
 
