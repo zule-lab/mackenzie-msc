@@ -30,6 +30,9 @@ street_surveys$Behaviour[which(street_surveys$Behaviour== "Glean ")] <- "Glean"
 street_surveys$Behaviour[which(street_surveys$Behaviour== "Peck ")] <- "Peck"
 street_surveys$Behaviour[which(street_surveys$Behaviour== "Sit on nest")] <- "Incubate"
 street_surveys$Behaviour[which(street_surveys$Behaviour== "Vocalize ")] <- "Vocalize"
+street_surveys$Behaviour[which(street_surveys$Behaviour== "Carry nesting material")] <- "Collect nesting material"
+
+
 
 #Modifications in the column: Plant species 
 
@@ -37,8 +40,40 @@ street_surveys$Plant.species[which(street_surveys$Plant.species== "Common Hackbe
 street_surveys$Plant.species[which(street_surveys$Plant.species== "Ground ")] <- "Ground"
 street_surveys$Plant.species[which(street_surveys$Plant.species== "Norway maple ")] <- "Norway maple"
 street_surveys$Plant.species[which(street_surveys$Plant.species== "Red ash ")] <- "Red ash"
+street_surveys$Plant.species[which(street_surveys$Plant.species== "Red Ash ")] <- "Red ash"
 street_surveys$Plant.species[which(street_surveys$Plant.species== "Tatarian honeysuckle ")] <- "Tatarian honeysuckle"
+street_surveys$Plant.species[which(street_surveys$Plant.species== "Tartarian honeysuckle")] <- "Tatarian honeysuckle"
 street_surveys$Plant.species[which(street_surveys$Plant.species== "White spruce ")] <- "White spruce"
+
+
+street_surveys <- street_surveys %>% mutate(BehaviourType = case_when(
+  Behaviour == "Attack squirrel" ~ 'Territory_defense',
+  Behaviour == "Beg" ~ 'Reproduction',  
+  Behaviour == "Bill wipe" ~ 'Grooming',
+  Behaviour == "Copulate" ~ 'Reproduction',
+  Behaviour == "Carry food" ~ 'Reproduction',
+  Behaviour == "Collect nesting material" ~ 'Reproduction',
+  Behaviour == "Court" ~ 'Reproduction',
+  Behaviour == "Feed young" ~ 'Reproduction',
+  Behaviour == "Forage" ~ 'Foraging',
+  Behaviour == "Gape" ~ 'Foraging',
+  Behaviour == "Glean" ~ 'Foraging',
+  Behaviour == "Ground forage" ~ 'Foraging',
+  Behaviour == "Hammer" ~ 'Foraging',
+  Behaviour == "Hang" ~ 'Foraging',
+  Behaviour == "Hop" ~ 'Foraging',
+  Behaviour == "Incubate" ~ 'Reproduction',
+  Behaviour == "Peck" ~ 'Foraging',
+  Behaviour == "Perch" ~ 'Rest',
+  Behaviour == "Preen" ~ 'Grooming',
+  Behaviour == "Reach" ~ 'Foraging',
+  Behaviour == "Stand" ~ 'Rest',
+  Behaviour == "Sally" ~ 'Foraging',
+  Behaviour == "Vocalize" ~ 'Territory_defense',
+  TRUE ~ 'NA'
+))
+
+
 
 #Renaming to match yard_surevy df
 names(street_surveys)[names(street_surveys) == 'Street.code'] <- 'Yard.code'
@@ -46,6 +81,7 @@ names(street_surveys)[names(street_surveys) == 'Street.code'] <- 'Yard.code'
 street_surveys$Type <- 'Street'
 street_surveys$IsHedge <- 'NA'
 street_surveys$Basal.density <- 'NA'
+
 
 
 

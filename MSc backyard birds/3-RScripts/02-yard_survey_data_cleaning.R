@@ -36,26 +36,32 @@ yard_surveys$Scientific.Name[which(yard_surveys$Scientific.Name== "Acer negundo 
 
 #Modifications in the column: Behaviour
 
-yard_surveys$Behaviour[which(yard_surveys$Scientific.Name== "Bathing ")] <- "Bathe"
-yard_surveys$Behaviour[which(yard_surveys$Scientific.Name== "Bill wipe, Preen, Perch")] <- "Bill wipe"
-yard_surveys$Behaviour[which(yard_surveys$Scientific.Name== "Eat seeds ")] <- "Feeder"
-yard_surveys$Behaviour[which(yard_surveys$Scientific.Name== "Eat at bird feeder")] <- "Feeder"
-yard_surveys$Behaviour[which(yard_surveys$Scientific.Name== "Eat")] <- "Feeder"
-yard_surveys$Behaviour[which(yard_surveys$Scientific.Name== "Glean ")] <- "Glean"
-yard_surveys$Behaviour[which(yard_surveys$Scientific.Name== "Perch ")] <- "Perch"
-yard_surveys$Behaviour[which(yard_surveys$Scientific.Name== "Preen, Bill wipe")] <- "Preen"
-yard_surveys$Behaviour[which(yard_surveys$Scientific.Name== "Preen, Perch")] <- "Preen"
-yard_surveys$Behaviour[which(yard_surveys$Scientific.Name== "Sally ")] <- "Sally"
-yard_surveys$Behaviour[which(yard_surveys$Scientific.Name== "Sit on nest")] <- "Incubate"
-yard_surveys$Behaviour[which(yard_surveys$Scientific.Name== "Vocalize ")] <- "Vocalize"
-yard_surveys$Behaviour[which(yard_surveys$Scientific.Name== "Vocalize, Peck")] <- "Vocalize"
-yard_surveys$Behaviour[which(yard_surveys$Scientific.Name== "Vocalize, Preen")] <- "Vocalize"
-yard_surveys$Behaviour[which(yard_surveys$Scientific.Name== "Vocalize, Perch, Preen")] <- "Vocalize"
+yard_surveys$Behaviour[which(yard_surveys$Behaviour== "Bathing ")] <- "Bathe"
+yard_surveys$Behaviour[which(yard_surveys$Behaviour== "Bill wipe, Preen, Perch")] <- "Bill wipe"
+yard_surveys$Behaviour[which(yard_surveys$Behaviour== "Eat seeds ")] <- "Feeder"
+yard_surveys$Behaviour[which(yard_surveys$Behaviour== "Eat at bird feeder")] <- "Feeder"
+yard_surveys$Behaviour[which(yard_surveys$Behaviour== "Eat")] <- "Feeder"
+yard_surveys$Behaviour[which(yard_surveys$Behaviour== "Feed")] <- "Feeder"
+yard_surveys$Behaviour[which(yard_surveys$Behaviour== "Glean ")] <- "Glean"
+yard_surveys$Behaviour[which(yard_surveys$Behaviour== "Nest")] <- "Incubate"
+yard_surveys$Behaviour[which(yard_surveys$Behaviour== "Perch ")] <- "Perch"
+yard_surveys$Behaviour[which(yard_surveys$Behaviour== "Preen, Bill wipe")] <- "Preen"
+yard_surveys$Behaviour[which(yard_surveys$Behaviour== "Preen, Perch")] <- "Preen"
+yard_surveys$Behaviour[which(yard_surveys$Behaviour== "Sally ")] <- "Sally"
+yard_surveys$Behaviour[which(yard_surveys$Behaviour== "Sit on nest")] <- "Incubate"
+yard_surveys$Behaviour[which(yard_surveys$Behaviour== "Vocalize ")] <- "Vocalize"
+yard_surveys$Behaviour[which(yard_surveys$Behaviour== "Vocalize, Peck")] <- "Vocalize"
+yard_surveys$Behaviour[which(yard_surveys$Behaviour== "Vocalize, Preen")] <- "Vocalize"
+yard_surveys$Behaviour[which(yard_surveys$Behaviour== "Vocalize, Perch, Preen")] <- "Vocalize"
+yard_surveys$Behaviour[which(yard_surveys$Behaviour== "Carry nesting material")] <- "Collect nesting material"
+
+
 
 #Modifications in the column: Plant species 
 
 yard_surveys$Plant.species[which(yard_surveys$Plant.species== "Bath")] <- "Bird bath"
 yard_surveys$Plant.species[which(yard_surveys$Plant.species== "Bath ")] <- "Bird bath"
+yard_surveys$Plant.species[which(yard_surveys$Plant.species== "Bird bath ")] <- "Bird bath"
 yard_surveys$Plant.species[which(yard_surveys$Plant.species== "Burning bush ")] <- "Burning bush"
 yard_surveys$Plant.species[which(yard_surveys$Plant.species== "Dead standing ")] <- "Dead standing"
 yard_surveys$Plant.species[which(yard_surveys$Plant.species== "European crab apple")] <- "European crabapple"
@@ -114,8 +120,41 @@ yard_surveys <- yard_surveys %>% mutate(Basal.density = case_when(
   TRUE ~ 'No'
 ))
 
-
-
+yard_surveys <- yard_surveys %>% mutate(BehaviourType = case_when(
+  Behaviour == "Bathe" ~ 'Grooming',
+  Behaviour == "Beg" ~ 'Reproduction',  
+  Behaviour == "Bill wipe" ~ 'Grooming',
+  Behaviour == "Build nest" ~ 'Reproduction',
+  Behaviour == "Carry food" ~ 'Reproduction',
+  Behaviour == "Collect nesting material" ~ 'Reproduction',
+  Behaviour == "Court" ~ 'Reproduction',
+  Behaviour == "Drink" ~ 'Anthropogenic_interaction',
+  Behaviour == "Feed each other" ~ 'Reproduction',
+  Behaviour == "Feed fledgling" ~ 'Reproduction',
+  Behaviour == "Feed young" ~ 'Reproduction',
+  Behaviour == "Feeder" ~ 'Anthropogenic_interaction',
+  Behaviour == "Forage" ~ 'Foraging',
+  Behaviour == "Gape" ~ 'Foraging',
+  Behaviour == "Glean" ~ 'Foraging',
+  Behaviour == "Ground forage" ~ 'Foraging',
+  Behaviour == "Hammer" ~ 'Foraging',
+  Behaviour == "Hang" ~ 'Foraging',
+  Behaviour == "Hide" ~ 'Reproduction',
+  Behaviour == "Hop" ~ 'Foraging',
+  Behaviour == "Incubate" ~ 'Reproduction',
+  Behaviour == "Peck" ~ 'Foraging',
+  Behaviour == "Perch" ~ 'Rest',
+  Behaviour == "Preen" ~ 'Grooming',
+  Behaviour == "Reach" ~ 'Foraging',
+  Behaviour == "Receive food" ~ 'Reproduction',
+  Behaviour == "Sally" ~ 'Foraging',
+  Behaviour == "Vocalize" ~ 'Territory_defense',
+  TRUE ~ 'NA'
+))
+  
+  
+  
+  
 #Joining the Elton birds dataset of ecological traits to the yard surveys dataset
 
 yard_surveys_cleaned <- left_join(yard_surveys,elton_birds, by = join_by("Bird.Scientific.Name" == "scientificNameStd"))
@@ -140,4 +179,5 @@ table(yard_surveys$Scientific.Name)
 table(yard_surveys$Plant.species)
 table(yard_surveys$DBH..cm.)
 table(yard_surveys$Yard.code)
+table(yard_surveys$Behaviour)
 
